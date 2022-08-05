@@ -17,6 +17,7 @@ for (let i = 1; i <= numGames; i++) {
 //   console.log("Eligio " + moveToText(moveIA));
 
   //RESULTADOS
+  alert('Partida ' + i + ': Jugador sacó [' + moveToText(movePlayer) + '] vs Maquina sacó [' + moveToText(moveIA) + ']\n Resultado: ' + gameResult(movePlayer, moveIA) + '!');
   console.log('Partida ' + i + ': Jugador sacó [' + moveToText(movePlayer) + '] vs Maquina sacó [' + moveToText(moveIA) + ']');
   console.log('Resultado: ' + gameResult(movePlayer, moveIA) + '!');
 }
