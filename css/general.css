@@ -1,0 +1,55 @@
+body {
+    background: #212529;
+    color: white;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    margin: 60px auto;
+    justify-content: center;
+    max-width: 500px;
+    text-align: center;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+    justify-content: center;
+    max-width: 500px;
+}
+
+h1, h4 {
+    margin: 0;
+}
+
+h4 {
+    font-size: 14px;
+    letter-spacing: 8px;
+    margin-bottom: 30px;
+}
+
+.title-container ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.title-container ul li i {
+    font-size: 30px;
+}
+
+i.--piedra,
+i.--papel {
+    transform: rotate(90deg);
+}
+
+i.--tijera {
+    transform: scaleX(-1);
+}
+
