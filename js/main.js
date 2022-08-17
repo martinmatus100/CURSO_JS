@@ -1,6 +1,7 @@
 /// VARIABLES
 let numGames = 0;
-let gameResult = [];
+let gameResultOld = [];
+let gameResult = []; // ARRAY DE OBJETOS
 
 /// CICLOS
 //WHILE
@@ -26,12 +27,20 @@ for (let i = 1; i <= numGames; i++) {
   if (getResult(movePlayer, moveIA) == "EMPATE") {
     i--;
   } else {
-    gameResult.push(getResult(movePlayer, moveIA));
+    gameResultOld.push(getResult(movePlayer, moveIA));
+
+    /// SE CARGA EL ARRAY CON EL OBJETO
+    gameResult.push({ player: moveToText(movePlayer), ia: moveToText(moveIA), result: getResult(movePlayer, moveIA)});
   }
 }
 
-alert('RESULTADO FINAL: [' + gameResult + ']\n ' + getFinalResult(gameResult));
-console.log("RESULTADO FINAL: [" + gameResult + "]");
+//alert('RESULTADO FINAL: [' + gameResultOld + ']\n ' + getFinalResult_Old(gameResultOld));
+console.log("RESULTADO FINAL: [" + gameResultOld + "]");
+console.log(getFinalResult_Old(gameResultOld));
+
+/// IMPRIME ARRAY DE OBJETOS Y RESULTADOS
+alert('RESULTADO FINAL: [' + gameResultOld + ']\n ' + getFinalResult(gameResult));
+console.log(gameResult);
 console.log(getFinalResult(gameResult));
 
 /// FUNCIONES
@@ -117,7 +126,7 @@ function getResult(move1, move2) {
     }
 }
 
-function getFinalResult(result) {
+function getFinalResult_Old(result) {
   let auxWin = 0;
   let auxLose = 0;
 
@@ -132,6 +141,17 @@ function getFinalResult(result) {
   }
 
   if(auxWin > auxLose) {
+    return "FELICITACIONES! GANASTE EL JUEGO"; 
+  } else {
+    return "MALA SUERTE! PERDISTE EL JUEGO";
+  }
+}
+
+function getFinalResult(array) {
+  let gamesWon = array.filter((el) => el.result == "GANASTE");
+  let gamesLost = array.filter((el) => el.result == "PERDISTE");
+
+  if(gamesWon.length > gamesLost.length) {
     return "FELICITACIONES! GANASTE EL JUEGO"; 
   } else {
     return "MALA SUERTE! PERDISTE EL JUEGO";
