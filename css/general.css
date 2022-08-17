@@ -17,7 +17,17 @@ body {
     flex-direction: column;
     margin: 10px auto;
     justify-content: center;
+    max-width: 1280px;
+    align-items: center;
+    gap: 30px;
+}
+
+.main-container .__instructions {
     max-width: 500px;
+}
+
+.main-container .__results {
+    max-width: 800px;
 }
 
 h1, h4 {

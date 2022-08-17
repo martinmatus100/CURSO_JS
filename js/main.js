@@ -13,35 +13,37 @@ do {
 for (let i = 1; i <= numGames; i++) {
   // JUGADA JUGADOR
   movePlayer = prompt("Ingrese Piedra [1], Papel [2] ó Tijera [3]: ");
-  // console.log("Eligio " + moveToText(movePlayer));
+
   // JUGADA MAQUINA
   moveIA = randomMove();
-  // console.log("Eligio " + moveToText(moveIA));
 
-  //RESULTADOS
-  alert('Partida ' + i + ': Jugador sacó [' + moveToText(movePlayer) + '] vs Maquina sacó [' + moveToText(moveIA) + ']\n Resultado: ' + getResult(movePlayer, moveIA) + '!');
-  
-  console.log('Partida ' + i + ': Jugador sacó [' + moveToText(movePlayer) + '] vs Maquina sacó [' + moveToText(moveIA) + ']');
-  console.log('Resultado: ' + getResult(movePlayer, moveIA) + '!');
+  //RESULTADOS PARCIALES
+  // console.log('Partida ' + i + ': Jugador sacó [' + moveToText(movePlayer) + '] vs Maquina sacó [' + moveToText(moveIA) + ']');
+  // console.log('Resultado: ' + getResult(movePlayer, moveIA) + '!');
+
+  let container = document.getElementById('listResults');
+  let resultItem = document.createElement('li');
+  resultItem.classList.add('list-group-item', 'd-flex', 'justify-content-between' ,'align-items-center','list-group-item-info');
+  resultItem.innerHTML =  '<span class="badge bg-info rounded-pill">' + i + '</span>' + 
+                          'JUGADOR sacó: ' + moveToText(movePlayer) + ' vs MAQUINA sacó: ' + moveToText(moveIA) + ' - RESULTADO: ' + getResult(movePlayer, moveIA);
+  container.appendChild(resultItem);
 
   if (getResult(movePlayer, moveIA) == "EMPATE") {
     i--;
   } else {
     gameResultOld.push(getResult(movePlayer, moveIA));
-
+    
     /// SE CARGA EL ARRAY CON EL OBJETO
     gameResult.push({ player: moveToText(movePlayer), ia: moveToText(moveIA), result: getResult(movePlayer, moveIA)});
   }
+  
 }
 
-//alert('RESULTADO FINAL: [' + gameResultOld + ']\n ' + getFinalResult_Old(gameResultOld));
-console.log("RESULTADO FINAL: [" + gameResultOld + "]");
-console.log(getFinalResult_Old(gameResultOld));
-
 /// IMPRIME ARRAY DE OBJETOS Y RESULTADOS
-alert('RESULTADO FINAL: [' + gameResultOld + ']\n ' + getFinalResult(gameResult));
-console.log(gameResult);
-console.log(getFinalResult(gameResult));
+// console.log(gameResult);
+// console.log(getFinalResult(gameResult));
+
+setFinalResults(gameResult);
 
 /// FUNCIONES
 function isOdd(val) {
@@ -152,8 +154,32 @@ function getFinalResult(array) {
   let gamesLost = array.filter((el) => el.result == "PERDISTE");
 
   if(gamesWon.length > gamesLost.length) {
-    return "FELICITACIONES! GANASTE EL JUEGO"; 
+    //return "FELICITACIONES! GANASTE EL JUEGO"; 
+    return true;
   } else {
-    return "MALA SUERTE! PERDISTE EL JUEGO";
+    //return "MALA SUERTE! PERDISTE EL JUEGO";
+    return false;
   }
+}
+
+function setFinalResults(arrayResult) {
+  let container = document.getElementById('alertResults');
+  let alertResultItem = document.createElement('div');
+  alertResultItem.classList.add('alert');
+  alertResultItem.setAttribute('role', 'alert');
+  let auxText, auxTitle = "";
+
+  if(getFinalResult(arrayResult)) {
+    alertResultItem.classList.add('alert-success');
+    auxTitle = "FELICITACIONES!"; 
+    auxText = "Ganaste el juego de Piedras, Papel o Tijeras :)";
+  } else {
+    alertResultItem.classList.add('alert-danger');
+    auxTitle = "MALA SUERTE!"; 
+    auxText = "Perdiste el juego de Piedras, Papel o Tijeras :(";
+  }
+
+  alertResultItem.innerHTML = '<h4 class="alert-heading">' + auxTitle + '</h4>' + 
+                              '<p>' + auxText + '</p>';
+  container.appendChild(alertResultItem);
 }
