@@ -1,6 +1,5 @@
 /// VARIABLES
 let numGames = 0;
-let gameResultOld = [];
 let gameResult = []; // ARRAY DE OBJETOS
 
 /// BUTTONS
@@ -21,158 +20,7 @@ txtNumGames.onkeydown = () => {
   }
 };
 
-//////////////////////////////////////////////////////////////////////////////////////
-//FOR
-for (let i = 1; i <= numGames; i++) {
-  // JUGADA JUGADOR
-  movePlayer = prompt("Ingrese Piedra [1], Papel [2] ó Tijera [3]: ");
-
-  // JUGADA MAQUINA
-  moveIA = randomMove();
-
-  //RESULTADOS PARCIALES
-  // console.log('Partida ' + i + ': Jugador sacó [' + moveToText(movePlayer) + '] vs Maquina sacó [' + moveToText(moveIA) + ']');
-  // console.log('Resultado: ' + getResult(movePlayer, moveIA) + '!');
-
-  let container = document.getElementById("listResults");
-  let resultItem = document.createElement("li");
-  resultItem.classList.add(
-    "list-group-item",
-    "d-flex",
-    "justify-content-between",
-    "align-items-center",
-    "list-group-item-info"
-  );
-  resultItem.innerHTML =
-    '<span class="badge bg-info rounded-pill">' +
-    i +
-    "</span>" +
-    "JUGADOR sacó: " +
-    moveToText(movePlayer) +
-    " vs MAQUINA sacó: " +
-    moveToText(moveIA) +
-    " - RESULTADO: " +
-    getResult(movePlayer, moveIA);
-  container.appendChild(resultItem);
-
-  if (getResult(movePlayer, moveIA) == "EMPATE") {
-    i--;
-  } else {
-    gameResultOld.push(getResult(movePlayer, moveIA));
-
-    /// SE CARGA EL ARRAY CON EL OBJETO
-    gameResult.push({
-      player: moveToText(movePlayer),
-      ia: moveToText(moveIA),
-      result: getResult(movePlayer, moveIA),
-    });
-  }
-}
-
-/// IMPRIME ARRAY DE OBJETOS Y RESULTADOS
-// console.log(gameResult);
-// console.log(getFinalResult(gameResult));
-
-setFinalResults(gameResult);
-
-/// FUNCIONES
-function isOdd(val) {
-  if (val % 2 == 0) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-// function moveToText(move) {
-//   switch (move) {
-//     case "1":
-//       return "Piedra";
-//       break;
-
-//     case "2":
-//       return "Papel";
-//       break;
-
-//     case "3":
-//       return "Tijera";
-//       break;
-
-//     case 1:
-//       return "Piedra";
-//       break;
-
-//     case 2:
-//       return "Papel";
-//       break;
-
-//     case 3:
-//       return "Tijera";
-//       break;
-//   }
-// }
-
-// function getResult(move1, move2) {
-//   const rock = "Piedra";
-//   const paper = "Papel";
-//   const scissors = "Tijera";
-//   const draw = "EMPATE";
-//   const win = "GANASTE";
-//   const lose = "PERDISTE";
-
-//   let valMovePlayer = moveToText(move1);
-//   let valMoveIA = moveToText(move2);
-
-//   if (valMovePlayer === valMoveIA) {
-//     return draw;
-//   }
-
-//   if (valMovePlayer === rock && valMoveIA === paper) {
-//     return lose;
-//   }
-
-//   if (valMovePlayer === rock && valMoveIA === scissors) {
-//     return win;
-//   }
-
-//   if (valMovePlayer === paper && valMoveIA === rock) {
-//     return win;
-//   }
-
-//   if (valMovePlayer === paper && valMoveIA === scissors) {
-//     return lose;
-//   }
-
-//   if (valMovePlayer === scissors && valMoveIA === rock) {
-//     return lose;
-//   }
-
-//   if (valMovePlayer === scissors && valMoveIA === paper) {
-//     return win;
-//   }
-// }
-
-function getFinalResult_Old(result) {
-  let auxWin = 0;
-  let auxLose = 0;
-
-  for (let i = 0; i <= result.length; i++) {
-    if (result[i] == "GANASTE") {
-      auxWin++;
-    }
-
-    if (result[i] == "PERDISTE") {
-      auxLose++;
-    }
-  }
-
-  if (auxWin > auxLose) {
-    return "FELICITACIONES! GANASTE EL JUEGO";
-  } else {
-    return "MALA SUERTE! PERDISTE EL JUEGO";
-  }
-}
-
+/// FUNCTIONS
 function getFinalResult(array) {
   let gamesWon = array.filter((el) => el.result == "GANASTE");
   let gamesLost = array.filter((el) => el.result == "PERDISTE");
@@ -212,8 +60,9 @@ function setFinalResults(arrayResult) {
     auxText +
     "</p>";
   container.appendChild(alertResultItem);
+  document.getElementById("btnResetGame").style.display = "block";
 }
-//////////////////////////////////////////////////////////////////////////////////////
+
 function getNumGames() {
   let container = document.getElementById("alertOddNum");
   let alertOddNumItem = document.createElement("div");
@@ -232,6 +81,14 @@ function getNumGames() {
     container.style.display = "block";
     container.appendChild(alertOddNumItem);
     txtNumGames.focus();
+  }
+}
+
+function isOdd(val) {
+  if (val % 2 == 0) {
+    return false;
+  } else {
+    return true;
   }
 }
 
@@ -277,9 +134,18 @@ function playGame() {
       auxResult = getResult(auxVal, moveIA);
       setResults(auxResult, auxIter);
       enableGames(auxIter);
+      /// SE CARGA EL ARRAY CON EL OBJETO
+      gameResult.push({
+        player: moveToText(auxVal),
+        ia: moveToText(moveIA),
+        result: auxResult,
+      });
+
+      if (auxIter == numGames) {
+        setFinalResults(gameResult);
+      }
     });
   }
-
 }
 
 function setIaMove(move, iter) {
@@ -416,7 +282,6 @@ function enableGames(currentIter) {
 
   if (iter >= 1) {
     let currentCard = document.getElementById("card_" + iter);
-    //let prevCard = document.getElementById("card_" + (currentIter-1));
     let nextCard = document.getElementById("card_" + nextIter);
     currentCard.classList.add("card-disabled");
     if (iter < maxIter) {
