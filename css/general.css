@@ -63,3 +63,42 @@ i.--tijera {
     transform: scaleX(-1);
 }
 
+#btn_StartGame {
+    margin: 20px 0;
+}
+.games-container > .card {
+    width: 800px;
+}
+
+.games-container .btn-group {
+    margin: 20px auto;
+}
+
+.games-container .btn-group > .btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 50% !important;
+    width: 70px;
+    height: 70px;
+    padding: 5px;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.games-container > .card .card-game {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.games-container .card-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.card-result .btn-group button > span {
+    font-size: 14px;
+}
