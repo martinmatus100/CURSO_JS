@@ -17,35 +17,36 @@
         <h1>PIEDRA, PAPEL O TIJERAS</h1>
         <h4>Simulador Interactivo</h4>
         <ul>
-            <li><i class="fa-solid fa-hand-back-fist --piedra"></i></span></li>
+            <li><i class="fa-solid fa-hand-back-fist --piedra"></i></li>
             <li><i class="fa-solid fa-hand --papel"></i></li>
             <li><i class="fa-solid fa-hand-scissors --tijera"></i></li>
         </ul>
     </div>
     <div class="main-container">
-        <ul class="list-group __instructions">
-            <li class="list-group-item d-flex justify-content-center align-items-center list-group-item-secondary">
-                Instrucciones - Asignaciones de teclas</li>
-            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
-                Piedra
-                <span class="badge bg-dark rounded-pill">1</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
-                Papel
-                <span class="badge bg-dark rounded-pill">2</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
-                Tijera
-                <span class="badge bg-dark rounded-pill">3</span>
-            </li>
-        </ul>
+        <div id="boxInstructions" class="instructions-container">
+            <h3>Instrucciones del juego</h3>
+            <ol>
+                <li>Ingrese la cantidad de partidas a jugar. Preferentemente un numero impar</li>
+                <li>Hacer click en alguna de las tres opciones para jugar (Piedra, Papel o Tijeras)</li>
+                <li>Buena Suerte!</li>
+            </ol>
 
-        <ul id="listResults" class="list-group __results">
-            <li class="list-group-item d-flex justify-content-center align-items-center list-group-item-secondary">
-                RESULTADOS PARCIALES</li>
-        </ul>
+            <div class="card text-bg-secondary border-warning text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Empecemos el juego!</h5>
+                    <p class="card-text">Ingrese la cantidad de partidas a jugar (numero impar)</p>
+                    <input type="number" class="form-control" id="txt_numGames" placeholder="1,3,5,7,9,11...">
+                    <button id="btn_StartGame" class="btn btn-warning  btn-lg" type="button">JUGAR</button>
+                    <div id="alertOddNum"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="boxGames" class="games-container" style="display: none;"></div>
 
         <div id="alertResults"></div>
+
+        <button id="btnResetGame" type="button" class="btn btn-danger btn-sm" style="display: none;" onclick="location.reload();">Reiniciar</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
