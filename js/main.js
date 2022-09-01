@@ -4,6 +4,7 @@ let gameResult = []; // ARRAY DE OBJETOS
 
 /// BUTTONS
 let btnStartGame = document.getElementById("btn_StartGame");
+let btnTheme = document.getElementById("switchDarkMode");
 
 /// INPUTS
 let txtNumGames = document.getElementById("txt_numGames");
@@ -11,6 +12,9 @@ let txtNumGames = document.getElementById("txt_numGames");
 /// ELEMENTS
 let instContainer = document.getElementById("boxInstructions");
 let gameContainer = document.getElementById("boxGames");
+
+/// SET THEME
+setTheme();
 
 /// CHECK numGames is Odd
 btnStartGame.addEventListener("click", getNumGames);
@@ -95,37 +99,62 @@ function isOdd(val) {
 function startGame(num) {
   for (let i = 1; i <= num; i++) {
     let cardGameItem = document.createElement("div");
-    cardGameItem.classList.add("card", "text-bg-warning", "mb-3", "text-center", "card-disabled");
+    cardGameItem.classList.add(
+      "card",
+      "text-bg-warning",
+      "mb-3",
+      "text-center",
+      "card-disabled"
+    );
     cardGameItem.setAttribute("id", "card_" + i);
-    if( i == 1 ) {
+    if (i == 1) {
       cardGameItem.classList.remove("card-disabled");
     }
-    cardGameItem.innerHTML = 
-    '<div class="card-header">Partida '+ i +'</div>' + 
-    '<div class="card-body"><div class="card-game">' +
+    cardGameItem.innerHTML =
+      '<div class="card-header">Partida ' +
+      i +
+      "</div>" +
+      '<div class="card-body"><div class="card-game">' +
       '<div class="card-player"><h5 class="card-title">Seleccione una opción</h5><div class="btn-group" role="group">' +
-        '<button id="btnPiedra_' + i + '" data-iter="'+i+'" data-val="1" type="button" class="btn btn-dark btn-player"><i class="fa-solid fa-hand-back-fist --piedra"></i><span>Piedra</span></button>'+
-        '<button id="btnPapel_' + i + '" data-iter="'+i+'" data-val="2" type="button" class="btn btn-dark btn-player"><i class="fa-solid fa-hand --papel"></i><span>Papel</span></button>'+
-        '<button id="btnTijera_' + i + '" data-iter="'+i+'" data-val="3" type="button" class="btn btn-dark btn-player"><i class="fa-solid fa-hand-scissors --tijera"></i><span>Tijera</span></button>'+
-      '</div></div>'+
-      '<div class="card-ia"><h5 class="card-title">Maquina sacó</h5><div id="btnIaGroup_' + i + '" class="btn-group" role="group"></div></div>'+
-      '<div class="card-result"><h5 class="card-title">Resultado Parcial</h5><div id="btnResultGroup_' + i + '" class="btn-group" role="group"></div></div>'+
-    '</div></div>';
+      '<button id="btnPiedra_' +
+      i +
+      '" data-iter="' +
+      i +
+      '" data-val="1" type="button" class="btn btn-dark btn-player"><i class="fa-solid fa-hand-back-fist --piedra"></i><span>Piedra</span></button>' +
+      '<button id="btnPapel_' +
+      i +
+      '" data-iter="' +
+      i +
+      '" data-val="2" type="button" class="btn btn-dark btn-player"><i class="fa-solid fa-hand --papel"></i><span>Papel</span></button>' +
+      '<button id="btnTijera_' +
+      i +
+      '" data-iter="' +
+      i +
+      '" data-val="3" type="button" class="btn btn-dark btn-player"><i class="fa-solid fa-hand-scissors --tijera"></i><span>Tijera</span></button>' +
+      "</div></div>" +
+      '<div class="card-ia"><h5 class="card-title">Maquina sacó</h5><div id="btnIaGroup_' +
+      i +
+      '" class="btn-group" role="group"></div></div>' +
+      '<div class="card-result"><h5 class="card-title">Resultado Parcial</h5><div id="btnResultGroup_' +
+      i +
+      '" class="btn-group" role="group"></div></div>' +
+      "</div></div>";
 
     gameContainer.appendChild(cardGameItem);
   }
 }
 
 function playGame() {
-  var auxIter, auxVal = 0;
+  var auxIter,
+    auxVal = 0;
   var moveIA;
   var auxResult;
-  const btnsPlayer = document.querySelectorAll('.btn-player');
+  const btnsPlayer = document.querySelectorAll(".btn-player");
 
   for (let i = 0; i < btnsPlayer.length; i++) {
-    btnsPlayer[i].addEventListener('click', function (e) {
-      auxIter = e.currentTarget.getAttribute('data-iter');
-      auxVal = e.currentTarget.getAttribute('data-val');
+    btnsPlayer[i].addEventListener("click", function (e) {
+      auxIter = e.currentTarget.getAttribute("data-iter");
+      auxVal = e.currentTarget.getAttribute("data-val");
       /// MOVE IA
       moveIA = randomMove(auxVal);
       /// SET IA MOVE
@@ -157,7 +186,8 @@ function setIaMove(move, iter) {
 
   switch (move) {
     case 1:
-      optIa = '<i class="fa-solid fa-hand-back-fist --piedra"></i><span>Piedra</span>';
+      optIa =
+        '<i class="fa-solid fa-hand-back-fist --piedra"></i><span>Piedra</span>';
       break;
 
     case 2:
@@ -165,7 +195,8 @@ function setIaMove(move, iter) {
       break;
 
     case 3:
-      optIa = '<i class="fa-solid fa-hand-scissors --tijera"></i><span>Tijera</span>';
+      optIa =
+        '<i class="fa-solid fa-hand-scissors --tijera"></i><span>Tijera</span>';
       break;
   }
 
@@ -261,12 +292,14 @@ function setResults(result, iter) {
 
   switch (result) {
     case "GANASTE":
-      optResult = '<i class="fa-solid fa-thumbs-up"></i><span>'+ result +'</span>';
+      optResult =
+        '<i class="fa-solid fa-thumbs-up"></i><span>' + result + "</span>";
       btnResultItem.classList.add("btn-success");
       break;
 
     case "PERDISTE":
-      optResult = '<i class="fa-solid fa-thumbs-down"></i><span>'+ result +'</span>';
+      optResult =
+        '<i class="fa-solid fa-thumbs-down"></i><span>' + result + "</span>";
       btnResultItem.classList.add("btn-danger");
       break;
   }
@@ -287,5 +320,49 @@ function enableGames(currentIter) {
     if (iter < maxIter) {
       nextCard.classList.remove("card-disabled");
     }
+  }
+}
+
+btnTheme.addEventListener("click", changeTheme);
+
+function changeTheme() {
+  let isChecked;
+
+  /** SET LOCALSTORAGE */
+  let themeObject = {
+    dark: 'on',
+  };
+  localStorage.setItem('theme', JSON.stringify(themeObject));
+  /** GET LOCALSTORAGE */
+  let localThemeObject = localStorage.getItem("theme");
+  let jsonTheme = JSON.parse(localThemeObject);
+
+  isChecked = document.getElementById("switchDarkMode").checked;
+
+  if (isChecked) {
+    // DARK MODE
+    document.body.classList.remove("light-theme");
+    jsonTheme["dark"] = "on";
+  } else {
+    // LIGHT MODE
+    document.body.classList.add("light-theme");
+    jsonTheme["dark"] = "off";
+  }
+
+  localStorage.setItem('theme', JSON.stringify(jsonTheme));
+}
+
+function setTheme() {
+  let localThemeObject = localStorage.getItem("theme");
+  jsonTheme = localThemeObject ? JSON.parse(localThemeObject) : {};
+
+  if (jsonTheme["dark"] == "on") {
+    document.getElementById("switchDarkMode").checked = true;
+    // DARK MODE
+    document.body.classList.remove("light-theme");
+  } else {
+    document.getElementById("switchDarkMode").checked = false;
+    // LIGHT MODE
+    document.body.classList.add("light-theme");
   }
 }
