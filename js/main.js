@@ -28,14 +28,9 @@ txtNumGames.onkeydown = () => {
 function getFinalResult(array) {
   let gamesWon = array.filter((el) => el.result == "GANASTE");
   let gamesLost = array.filter((el) => el.result == "PERDISTE");
-
-  if (gamesWon.length > gamesLost.length) {
-    //return "FELICITACIONES! GANASTE EL JUEGO";
-    return true;
-  } else {
-    //return "MALA SUERTE! PERDISTE EL JUEGO";
-    return false;
-  }
+  /// 1- OPERADOR TERNARIO
+  let finalResult = (gamesWon.length > gamesLost.length) ? true : false; 
+  return finalResult;
 }
 
 function setFinalResults(arrayResult) {
@@ -107,9 +102,9 @@ function startGame(num) {
       "card-disabled"
     );
     cardGameItem.setAttribute("id", "card_" + i);
-    if (i == 1) {
-      cardGameItem.classList.remove("card-disabled");
-    }
+    /// OPERADOR LÓGICO AND
+    (i == 1) && cardGameItem.classList.remove("card-disabled");
+
     cardGameItem.innerHTML =
       '<div class="card-header">Partida ' +
       i +
