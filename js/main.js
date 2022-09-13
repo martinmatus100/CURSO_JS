@@ -34,37 +34,25 @@ function getFinalResult(array) {
 }
 
 function setFinalResults(arrayResult) {
-  let container = document.getElementById("alertResults");
-  let alertResultItem = document.createElement("div");
-  alertResultItem.classList.add("alert");
-  alertResultItem.setAttribute("role", "alert");
-  let auxText,
-    auxTitle = "";
-
   if (getFinalResult(arrayResult)) {
-    alertResultItem.classList.add("alert-success");
-    auxTitle = "FELICITACIONES!";
-    auxText = "Ganaste el juego de Piedras, Papel o Tijeras :)";
+    swal({
+      title: "FELICITACIONES!",
+      text: "Ganaste el juego de Piedras, Papel o Tijeras!",
+      icon: "success",
+    });
   } else {
-    alertResultItem.classList.add("alert-danger");
-    auxTitle = "MALA SUERTE!";
-    auxText = "Perdiste el juego de Piedras, Papel o Tijeras :(";
+    swal({
+      title: "MALA SUERTE!",
+      text: "Perdiste el juego de Piedras, Papel o Tijeras!",
+      icon: "error",
+    });
   }
 
-  alertResultItem.innerHTML =
-    '<h4 class="alert-heading">' +
-    auxTitle +
-    "</h4>" +
-    "<p>" +
-    auxText +
-    "</p>";
-  container.appendChild(alertResultItem);
   document.getElementById("btnResetGame").style.display = "block";
 }
 
 function getNumGames() {
   let container = document.getElementById("alertOddNum");
-  let alertOddNumItem = document.createElement("div");
 
   if (isOdd(txtNumGames.value)) {
     container.style.display = "none";
@@ -74,11 +62,13 @@ function getNumGames() {
     startGame(numGames);
     playGame();
   } else {
-    alertOddNumItem.classList.add("alert", "alert-danger");
-    alertOddNumItem.setAttribute("role", "alert");
-    alertOddNumItem.innerHTML = "Por favor ingrese un número IMPAR para jugar!";
-    container.style.display = "block";
-    container.appendChild(alertOddNumItem);
+    Toastify({
+      text: "Por favor ingrese un número IMPAR para jugar!",
+      style: {
+        background: "linear-gradient(to right, #dc3545, #d63384)",
+      },
+      duration: 3000,
+    }).showToast();
     txtNumGames.focus();
   }
 }
@@ -325,9 +315,9 @@ function changeTheme() {
 
   /** SET LOCALSTORAGE */
   let themeObject = {
-    dark: 'on',
+    dark: "on",
   };
-  localStorage.setItem('theme', JSON.stringify(themeObject));
+  localStorage.setItem("theme", JSON.stringify(themeObject));
   /** GET LOCALSTORAGE */
   let localThemeObject = localStorage.getItem("theme");
   let jsonTheme = JSON.parse(localThemeObject);
@@ -344,7 +334,7 @@ function changeTheme() {
     jsonTheme["dark"] = "off";
   }
 
-  localStorage.setItem('theme', JSON.stringify(jsonTheme));
+  localStorage.setItem("theme", JSON.stringify(jsonTheme));
 }
 
 function setTheme() {
