@@ -122,3 +122,30 @@ body.light-theme {
     color: #212529 !important;
     background: white !important;
 }
+
+.boxreview-title{
+    margin-top: 50px;
+}
+
+#boxReviews {
+    margin-top: 0px;
+}
+
+body:not(.light-theme) #boxReviews .card-body {
+    background: #6c757d;
+}
+
+/*  MOBILE  */
+@media (max-width: 768px) {
+    .games-container > .card .card-game {
+        flex-direction: column;
+    }
+
+    .games-container > .card {
+        width: auto;
+    }
+
+    .instructions-container {
+        margin: 0 15px;
+    }
+}

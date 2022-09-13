@@ -12,9 +12,13 @@ let txtNumGames = document.getElementById("txt_numGames");
 /// ELEMENTS
 let instContainer = document.getElementById("boxInstructions");
 let gameContainer = document.getElementById("boxGames");
+let reviewContainer = document.getElementById("boxReviews");
 
 /// SET THEME
 setTheme();
+
+/// SHOW REVIEWS
+getReviews();
 
 /// CHECK numGames is Odd
 btnStartGame.addEventListener("click", getNumGames);
@@ -29,7 +33,7 @@ function getFinalResult(array) {
   let gamesWon = array.filter((el) => el.result == "GANASTE");
   let gamesLost = array.filter((el) => el.result == "PERDISTE");
   /// 1- OPERADOR TERNARIO
-  let finalResult = (gamesWon.length > gamesLost.length) ? true : false; 
+  let finalResult = gamesWon.length > gamesLost.length ? true : false;
   return finalResult;
 }
 
@@ -93,7 +97,7 @@ function startGame(num) {
     );
     cardGameItem.setAttribute("id", "card_" + i);
     /// OPERADOR LÓGICO AND
-    (i == 1) && cardGameItem.classList.remove("card-disabled");
+    i == 1 && cardGameItem.classList.remove("card-disabled");
 
     cardGameItem.innerHTML =
       '<div class="card-header">Partida ' +
@@ -350,4 +354,28 @@ function setTheme() {
     // LIGHT MODE
     document.body.classList.add("light-theme");
   }
+}
+
+function getReviews() {
+  fetch("/reviews.json")
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach((review) => {
+        let reviewItem = document.createElement("div");
+        reviewItem.classList.add("col");
+        reviewItem.innerHTML = `
+          <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">${review.nombre}</h5>
+                <p class="card-text">${review.comentario}</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">${review.fecha}</small>
+            </div>
+          </div>
+        `;
+
+        reviewContainer.append(reviewItem);
+      });
+    });
 }
